@@ -19,6 +19,11 @@ public class FavorServiceImpl implements FavorService {
     }
 
     @Override
+    public Favor getById(Long id) {
+        return favorRepository.getReferenceById(id);
+    }
+
+    @Override
     public Favor update(Long id, Favor favor) {
         favor.setId(id);
         return favorRepository.save(favor);

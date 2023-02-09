@@ -5,7 +5,7 @@ import com.splot.carservice.model.Mechanic;
 public interface MechanicService {
     Mechanic save(Mechanic mechanic);
 
-    Mechanic update(Long id, Mechanic mechanic);
+    Mechanic update(Mechanic mechanic);
 
     Mechanic getById(Long id);
 

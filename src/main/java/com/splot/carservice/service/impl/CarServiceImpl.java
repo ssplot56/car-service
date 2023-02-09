@@ -23,4 +23,9 @@ public class CarServiceImpl implements CarService {
         car.setId(id);
         return carRepository.save(car);
     }
+
+    @Override
+    public Car getById(Long id) {
+        return carRepository.getReferenceById(id);
+    }
 }
