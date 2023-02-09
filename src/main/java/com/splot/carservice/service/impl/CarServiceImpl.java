@@ -19,12 +19,6 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car update(Long id, Car car) {
-        car.setId(id);
-        return carRepository.save(car);
-    }
-
-    @Override
     public Car getById(Long id) {
         return carRepository.getReferenceById(id);
     }

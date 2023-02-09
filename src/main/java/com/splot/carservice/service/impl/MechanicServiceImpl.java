@@ -22,11 +22,6 @@ public class MechanicServiceImpl implements MechanicService {
     }
 
     @Override
-    public Mechanic update(Mechanic mechanic) {
-        return mechanicRepository.save(mechanic);
-    }
-
-    @Override
     public Mechanic getById(Long id) {
         return mechanicRepository.getReferenceById(id);
     }

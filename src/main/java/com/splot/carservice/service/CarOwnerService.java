@@ -7,6 +7,8 @@ import java.util.List;
 public interface CarOwnerService {
     CarOwner save(CarOwner owner);
 
+    CarOwner getById(Long id);
+
     CarOwner update(Long id, CarOwner owner);
 
     List<Order> getOrders(Long id);

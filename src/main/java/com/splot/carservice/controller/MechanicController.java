@@ -45,7 +45,7 @@ public class MechanicController {
                                       @RequestBody MechanicRequestDto requestDto) {
         Mechanic mechanic = requestMapper.mapToModel(requestDto);
         mechanic.setId(id);
-        mechanicService.update(mechanic);
+        mechanicService.save(mechanic);
         return responseMapper.mapToDto(mechanic);
     }
 

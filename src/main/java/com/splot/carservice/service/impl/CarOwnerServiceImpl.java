@@ -21,6 +21,11 @@ public class CarOwnerServiceImpl implements CarOwnerService {
     }
 
     @Override
+    public CarOwner getById(Long id) {
+        return ownerRepository.getReferenceById(id);
+    }
+
+    @Override
     public CarOwner update(Long id, CarOwner owner) {
         owner.setId(id);
         return ownerRepository.save(owner);
