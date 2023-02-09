@@ -12,8 +12,7 @@ public class Favor {
     @ManyToOne
     private Mechanic mechanic;
     private Double cost;
-    @ManyToOne
-    private FavorStatus status;
+    private StatusName status;
 
     public Long getId() {
         return id;
@@ -47,11 +46,11 @@ public class Favor {
         this.cost = cost;
     }
 
-    public FavorStatus getStatus() {
+    public StatusName getStatus() {
         return status;
     }
 
-    public void setStatus(FavorStatus status) {
+    public void setStatus(StatusName status) {
         this.status = status;
     }
 
@@ -64,5 +63,10 @@ public class Favor {
                 ", cost=" + cost +
                 ", status=" + status +
                 '}';
+    }
+
+    public enum StatusName {
+        PAID,
+        NOT_PAID
     }
 }

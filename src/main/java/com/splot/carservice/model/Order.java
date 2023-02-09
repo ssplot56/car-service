@@ -17,8 +17,7 @@ public class Order {
     private List<Favor> favors;
     @OneToMany
     private List<MachineComponent> components;
-    @ManyToOne
-    private OrderStatus status;
+    private StatusName status;
     private Double finalCost;
     private LocalDateTime completeDate;
 
@@ -70,11 +69,11 @@ public class Order {
         this.components = components;
     }
 
-    public OrderStatus getStatus() {
+    public StatusName getStatus() {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    public void setStatus(StatusName status) {
         this.status = status;
     }
 
@@ -107,5 +106,13 @@ public class Order {
                 ", finalCost=" + finalCost +
                 ", completeDate=" + completeDate +
                 '}';
+    }
+
+    public enum StatusName {
+        ACCEPT,
+        IN_PROCESS,
+        SUCCESSFUL_DONE,
+        UNSUCCESSFUL_DONE,
+        PAID
     }
 }
