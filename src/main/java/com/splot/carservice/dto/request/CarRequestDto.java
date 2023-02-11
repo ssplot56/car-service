@@ -1,11 +1,12 @@
 package com.splot.carservice.dto.request;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class CarRequestDto {
     private String model;
     private Integer manufactureYear;
     private String carNumber;
-    private Long ownerId;
 }

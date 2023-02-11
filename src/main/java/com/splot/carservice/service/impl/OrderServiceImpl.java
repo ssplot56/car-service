@@ -1,32 +1,38 @@
 package com.splot.carservice.service.impl;
 
-import com.splot.carservice.model.Favor;
-import com.splot.carservice.model.MachineComponent;
+import com.splot.carservice.model.Owner;
+import com.splot.carservice.model.Product;
 import com.splot.carservice.model.Order;
 import com.splot.carservice.repository.OrderRepository;
+import com.splot.carservice.service.OwnerService;
 import com.splot.carservice.service.OrderService;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
+    private final OwnerService ownerService;
 
-    public OrderServiceImpl(OrderRepository orderRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository,
+                            OwnerService ownerService) {
         this.orderRepository = orderRepository;
+        this.ownerService = ownerService;
     }
 
     @Override
     public Order save(Order order) {
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+        Owner owner = savedOrder.getCar().getOwner();
+        owner.getOrders().add(savedOrder);
+        ownerService.save(owner);
+        return savedOrder;
     }
 
     @Override
-    public Order addMachineComponent(Long id, MachineComponent component) {
+    public Order addMachineComponent(Long id, Product component) {
         Order order = orderRepository.getReferenceById(id);
-        List<MachineComponent> components = order.getComponents();
-        components.add(component);
-        order.setComponents(components);
+
+
         return orderRepository.save(order);
     }
 
@@ -46,15 +52,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order getFinalCost(Long id) {
-        Order order = orderRepository.getReferenceById(id);
-        double finalCost = 0.0;
-        for (MachineComponent component : order.getComponents()) {
-            finalCost += component.getCost();
-        }
-        for (Favor favor : order.getFavors()) {
-            finalCost += favor.getCost();
-        }
-        order.setFinalCost(finalCost);
-        return orderRepository.save(order);
+
+        return null;
     }
 }

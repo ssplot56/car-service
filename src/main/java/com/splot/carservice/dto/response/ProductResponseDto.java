@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CarResponseDto {
+public class ProductResponseDto {
     private Long id;
-    private String model;
-    private Integer manufactureYear;
-    private String carNumber;
+    private String name;
+    private Double cost;
 }

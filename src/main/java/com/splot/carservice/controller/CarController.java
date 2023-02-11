@@ -6,13 +6,10 @@ import com.splot.carservice.model.Car;
 import com.splot.carservice.service.CarService;
 import com.splot.carservice.service.mapper.RequestDtoMapper;
 import com.splot.carservice.service.mapper.ResponseDtoMapper;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/cars")
+@RestController
+@RequestMapping("/cars")
 public class CarController {
     private final CarService carService;
     private final ResponseDtoMapper<CarResponseDto, Car> responseMapper;

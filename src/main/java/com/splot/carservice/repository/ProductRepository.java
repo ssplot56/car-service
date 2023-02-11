@@ -1,9 +1,9 @@
 package com.splot.carservice.repository;
 
-import com.splot.carservice.model.CarOwner;
+import com.splot.carservice.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CarOwnerRepository extends JpaRepository<CarOwner, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 }
