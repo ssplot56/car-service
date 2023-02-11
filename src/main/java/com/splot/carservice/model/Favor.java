@@ -1,68 +1,42 @@
 package com.splot.carservice.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity(name = "favors")
+@Getter
+@Setter
+@Entity
+@Table(name = "favors")
 public class Favor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private Order order;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mechanic_id")
     private Mechanic mechanic;
     private Double cost;
-    @ManyToOne
-    private FavorStatus status;
+    @Enumerated(EnumType.STRING)
+    private StatusName status;
 
-    public Long getId() {
-        return id;
-    }
+    public enum StatusName {
+        PAID("Paid"),
+        NOT_PAID("Not paid");
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Mechanic getMechanic() {
-        return mechanic;
-    }
-
-    public void setMechanic(Mechanic mechanic) {
-        this.mechanic = mechanic;
-    }
-
-    public Double getCost() {
-        return cost;
-    }
-
-    public void setCost(Double cost) {
-        this.cost = cost;
-    }
-
-    public FavorStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(FavorStatus status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Favor{" +
-                "id=" + id +
-                ", order=" + order +
-                ", mechanic=" + mechanic +
-                ", cost=" + cost +
-                ", status=" + status +
-                '}';
+        StatusName(String value) {
+        }
     }
 }

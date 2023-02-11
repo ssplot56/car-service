@@ -1,111 +1,62 @@
 package com.splot.carservice.model;
 
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity(name = "orders")
+@Getter
+@Setter
+@Entity
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Car car;
-    private String problemDescription;
+    private String description;
+    @Column(name = "acceptance_date")
     private LocalDateTime acceptDate;
     @OneToMany
+    @JoinTable(name = "orders_favors",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "favor_id"))
     private List<Favor> favors;
     @OneToMany
-    private List<MachineComponent> components;
-    @ManyToOne
-    private OrderStatus status;
-    private Double finalCost;
+    @JoinTable(name = "orders_products",
+            joinColumns = @JoinColumn(name= "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products;
+    @Enumerated(EnumType.STRING)
+    private StatusName status;
+    private Double price;
+    @Column(name = "completion_date")
     private LocalDateTime completeDate;
 
-    public Long getId() {
-        return id;
-    }
+    public enum StatusName {
+        ACCEPT("Accept"),
+        IN_PROCESS("In process"),
+        SUCCESSFUL_DONE("Successful completed"),
+        UNSUCCESSFUL_DONE("Unsuccessful completed"),
+        PAID("Paid");
+        private String value;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
-    public String getProblemDescription() {
-        return problemDescription;
-    }
-
-    public void setProblemDescription(String problemDescription) {
-        this.problemDescription = problemDescription;
-    }
-
-    public LocalDateTime getAcceptDate() {
-        return acceptDate;
-    }
-
-    public void setAcceptDate(LocalDateTime acceptDate) {
-        this.acceptDate = acceptDate;
-    }
-
-    public List<Favor> getFavors() {
-        return favors;
-    }
-
-    public void setFavors(List<Favor> favors) {
-        this.favors = favors;
-    }
-
-    public List<MachineComponent> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<MachineComponent> components) {
-        this.components = components;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public Double getFinalCost() {
-        return finalCost;
-    }
-
-    public void setFinalCost(Double finalCost) {
-        this.finalCost = finalCost;
-    }
-
-    public LocalDateTime getCompleteDate() {
-        return completeDate;
-    }
-
-    public void setCompleteDate(LocalDateTime completeDate) {
-        this.completeDate = completeDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", car=" + car +
-                ", problemDescription='" + problemDescription + '\'' +
-                ", acceptDate=" + acceptDate +
-                ", favors=" + favors +
-                ", components=" + components +
-                ", status=" + status +
-                ", finalCost=" + finalCost +
-                ", completeDate=" + completeDate +
-                '}';
+        StatusName(String value) {
+        }
     }
 }
