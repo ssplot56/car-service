@@ -8,6 +8,7 @@ import com.splot.carservice.model.Order;
 import com.splot.carservice.service.MechanicService;
 import com.splot.carservice.service.mapper.RequestDtoMapper;
 import com.splot.carservice.service.mapper.ResponseDtoMapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,12 +38,14 @@ public class MechanicController {
     }
 
     @PostMapping
+    @ApiOperation("Add a new mechanic")
     public MechanicResponseDto create(@RequestBody MechanicRequestDto requestDto) {
         Mechanic mechanic = mechanicService.save(requestMapper.mapToModel(requestDto));
         return responseMapper.mapToDto(mechanic);
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("Update existing mechanic by id")
     public MechanicResponseDto update(@PathVariable Long id,
                                       @RequestBody MechanicRequestDto requestDto) {
         Mechanic mechanic = requestMapper.mapToModel(requestDto);
@@ -51,6 +54,7 @@ public class MechanicController {
     }
 
     @GetMapping("/{id}/orders")
+    @ApiOperation("Get mechanic complete orders")
     public List<OrderResponseDto> getOrders(@PathVariable Long id) {
         return mechanicService.getOrders(id).stream()
                 .map(orderResponseMapper::mapToDto)
@@ -58,6 +62,7 @@ public class MechanicController {
     }
 
     @GetMapping("/{id}/salary")
+    @ApiOperation("Get mechanic salary")
     public Double getSalary(@PathVariable Long id) {
         return mechanicService.getSalary(id);
     }

@@ -9,6 +9,7 @@ import com.splot.carservice.model.Product;
 import com.splot.carservice.service.OrderService;
 import com.splot.carservice.service.mapper.RequestDtoMapper;
 import com.splot.carservice.service.mapper.ResponseDtoMapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,7 @@ public class OrderController {
     }
 
     @PostMapping
+    @ApiOperation("Add a new order")
     public OrderResponseDto create(@RequestBody OrderRequestDto requestDto) {
         Order order = requestMapper.mapToModel(requestDto);
         orderService.save(order);
@@ -46,13 +48,15 @@ public class OrderController {
     }
 
     @PostMapping("/{id}/product")
-    public OrderResponseDto addProduct(@PathVariable Long id,
-                                       @RequestBody ProductRequestDto requestDto) {
+    @ApiOperation("Add new product to existing order by order id")
+    public OrderResponseDto updateStatus(@PathVariable Long id,
+                                         @RequestBody ProductRequestDto requestDto) {
         Product product = productRequestMapper.mapToModel(requestDto);
         return responseMapper.mapToDto(orderService.addMachineComponent(id, product));
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("Update existing order by id")
     public OrderResponseDto update(@PathVariable Long id,
                                    @RequestBody OrderRequestDto requestDto) {
         Order order = requestMapper.mapToModel(requestDto);
@@ -60,13 +64,15 @@ public class OrderController {
     }
 
     @PutMapping("/{id}/status")
-    public OrderResponseDto addProduct(@PathVariable Long id,
-                                       @RequestBody StatusRequestDto statusRequestDto) {
+    @ApiOperation("Update order status by order id")
+    public OrderResponseDto updateStatus(@PathVariable Long id,
+                                         @RequestBody StatusRequestDto statusRequestDto) {
         Order.StatusName status = statusRequestMapper.mapToModel(statusRequestDto);
         return responseMapper.mapToDto(orderService.updateOrderStatus(id, status));
     }
 
     @GetMapping("/{id}/cost")
+    @ApiOperation("Get final cost for order by id")
     public Double getFinalCost(@PathVariable Long id) {
         return orderService.getFinalCost(id);
     }
