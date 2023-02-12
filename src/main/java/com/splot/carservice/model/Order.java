@@ -1,6 +1,5 @@
 package com.splot.carservice.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

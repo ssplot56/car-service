@@ -1,12 +1,12 @@
 package com.splot.carservice.service.impl;
 
+import com.splot.carservice.model.Favor;
 import com.splot.carservice.model.Mechanic;
 import com.splot.carservice.model.Order;
 import com.splot.carservice.repository.MechanicRepository;
 import com.splot.carservice.service.MechanicService;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MechanicServiceImpl implements MechanicService {
@@ -32,20 +32,21 @@ public class MechanicServiceImpl implements MechanicService {
         return calculateSalary(mechanic);
     }
 
+    @Override
+    public List<Order> getOrders(Long id) {
+        return mechanicRepository.getReferenceById(id).getCompleteOrders();
+    }
+
     private Double calculateSalary (Mechanic mechanic) {
-        List<Order> ordersToBePaid = mechanic.getCompleteOrders().stream()
-                .filter(o -> o.getStatus().equals(Order.StatusName.SUCCESSFUL_DONE))
-                .collect(Collectors.toList());
-        List<Order> allOrders = mechanic.getCompleteOrders();
-        allOrders.removeAll(ordersToBePaid);
-        double salary = 0.0;
-        for (Order order : ordersToBePaid) {
-            salary += order.getFinalCost() * 0.4;
-            order.setStatus(Order.StatusName.PAID);
-            allOrders.add(order);
+        double totalFavorsCost = 0.0;
+        List<Order> orders = mechanic.getCompleteOrders();
+        for (Order order : orders) {
+            for (Favor favor : order.getFavors()) {
+                if (favor.getMechanic().equals(mechanic)) {
+                    totalFavorsCost += favor.getCost();
+                }
+            }
         }
-        mechanic.setCompleteOrders(allOrders);
-        mechanicRepository.save(mechanic);
-        return salary;
+        return totalFavorsCost * 0.4;
     }
 }

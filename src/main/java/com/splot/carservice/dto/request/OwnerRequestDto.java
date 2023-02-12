@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MechanicRequestDto {
+public class OwnerRequestDto {
     private String fullName;
+    private List<Long> carIds;
     private List<Long> orderIds;
 }

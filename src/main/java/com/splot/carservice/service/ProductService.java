@@ -6,4 +6,6 @@ public interface ProductService {
     Product save(Product component);
 
     Product update(Long id, Product component);
+
+    Product getById(Long id);
 }

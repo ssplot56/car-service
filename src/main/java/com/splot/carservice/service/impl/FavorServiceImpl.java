@@ -28,11 +28,4 @@ public class FavorServiceImpl implements FavorService {
         favor.setId(id);
         return favorRepository.save(favor);
     }
-
-    @Override
-    public Favor updateStatus(Long id, String status) {
-        Favor favor = favorRepository.getReferenceById(id);
-        favor.setStatus(Favor.StatusName.PAID);
-        return favorRepository.save(favor);
-    }
 }

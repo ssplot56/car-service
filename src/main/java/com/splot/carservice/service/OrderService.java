@@ -10,7 +10,9 @@ public interface OrderService {
 
     Order update(Long id, Order order);
 
-    Order updateOrderStatus(Long id, String status);
+    Order updateOrderStatus(Long id, Order.StatusName status);
 
-    Order getFinalCost(Long id);
+    Double getFinalCost(Long id);
+
+    Order getById(Long id);
 }
