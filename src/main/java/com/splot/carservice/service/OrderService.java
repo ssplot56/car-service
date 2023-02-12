@@ -6,11 +6,13 @@ import com.splot.carservice.model.Order;
 public interface OrderService {
     Order save(Order order);
 
-    Order addMachineComponent(Long id, Product component);
+    Order addProduct(Long id, Product component);
 
     Order update(Long id, Order order);
 
-    Order updateOrderStatus(Long id, String status);
+    Order updateOrderStatus(Long id, Order.StatusName status);
 
-    Order getFinalCost(Long id);
+    Double getFinalCost(Long id);
+
+    Order getById(Long id);
 }

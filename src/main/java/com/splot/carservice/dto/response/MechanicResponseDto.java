@@ -1,9 +1,11 @@
 package com.splot.carservice.dto.response;
 
-import lombok.Data;
+import lombok.Setter;
+import lombok.Getter;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class MechanicResponseDto {
     private Long id;
     private String fullName;

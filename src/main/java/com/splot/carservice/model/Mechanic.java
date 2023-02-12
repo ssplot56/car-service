@@ -1,51 +1,31 @@
 package com.splot.carservice.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity(name = "mechanics")
+@Getter
+@Setter
+@Entity
+@Table(name = "mechanics")
 public class Mechanic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "full_name")
     private String fullName;
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "mechanics_completed_orders",
+            joinColumns = @JoinColumn(name = "mechanic_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> completeOrders;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public List<Order> getCompleteOrders() {
-        return completeOrders;
-    }
-
-    public void setCompleteOrders(List<Order> completeOrders) {
-        this.completeOrders = completeOrders;
-    }
-
-    @Override
-    public String toString() {
-        return "Mechanic{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", completeOrders=" + completeOrders +
-                '}';
-    }
 }

@@ -1,8 +1,9 @@
 package com.splot.carservice.dto.request;
 
+import com.splot.carservice.model.Order;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.List;
 
 @Getter
 @Setter
@@ -11,4 +12,5 @@ public class OrderRequestDto {
     private String problemDescription;
     private List<Long> productIds;
     private List<Long> favorIds;
+    private Order.StatusName status;
 }

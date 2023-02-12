@@ -8,6 +8,4 @@ public interface FavorService {
     Favor getById(Long id);
 
     Favor update(Long id, Favor favor);
-
-    Favor updateStatus(Long id, String status);
 }

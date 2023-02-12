@@ -7,6 +7,7 @@ import com.splot.carservice.model.Favor;
 import com.splot.carservice.service.FavorService;
 import com.splot.carservice.service.mapper.RequestDtoMapper;
 import com.splot.carservice.service.mapper.ResponseDtoMapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,12 +34,14 @@ public class FavorController {
     }
 
     @PostMapping
+    @ApiOperation("Add a new favor")
     public FavorResponseDto create(@RequestBody FavorRequestDto requestDto) {
         return responseMapper.mapToDto(favorService
                 .save(requestMapper.mapToModel(requestDto)));
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("Update existing favor by id")
     public FavorResponseDto update(@PathVariable Long id,
                                    @RequestBody FavorRequestDto requestDto) {
         Favor favor = requestMapper.mapToModel(requestDto);
@@ -47,6 +50,7 @@ public class FavorController {
     }
 
     @PutMapping("/{id}/status")
+    @ApiOperation("Update favor status by favor id")
     private FavorResponseDto changeStatus(@PathVariable Long id,
                                           @RequestBody StatusRequestDto requestDto) {
         Favor favor = favorService.getById(id);
