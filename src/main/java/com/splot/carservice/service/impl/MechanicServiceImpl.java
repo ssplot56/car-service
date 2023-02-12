@@ -7,10 +7,12 @@ import com.splot.carservice.repository.MechanicRepository;
 import com.splot.carservice.service.MechanicService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MechanicServiceImpl implements MechanicService {
     private final MechanicRepository mechanicRepository;
+    private static final Double SALARY_PERCENT = 0.4;
 
     public MechanicServiceImpl(MechanicRepository mechanicRepository) {
         this.mechanicRepository = mechanicRepository;
@@ -23,18 +25,19 @@ public class MechanicServiceImpl implements MechanicService {
 
     @Override
     public Mechanic getById(Long id) {
-        return mechanicRepository.getReferenceById(id);
+        return Optional.of(mechanicRepository.getReferenceById(id))
+                .orElseThrow(() -> new RuntimeException("Mechanic with id:" + id + " not found!"));
     }
 
     @Override
     public Double getSalary(Long id) {
-        Mechanic mechanic = mechanicRepository.getReferenceById(id);
+        Mechanic mechanic = getById(id);
         return calculateSalary(mechanic);
     }
 
     @Override
     public List<Order> getOrders(Long id) {
-        return mechanicRepository.getReferenceById(id).getCompleteOrders();
+        return getById(id).getCompleteOrders();
     }
 
     private Double calculateSalary (Mechanic mechanic) {
@@ -47,6 +50,6 @@ public class MechanicServiceImpl implements MechanicService {
                 }
             }
         }
-        return totalFavorsCost * 0.4;
+        return totalFavorsCost * SALARY_PERCENT;
     }
 }

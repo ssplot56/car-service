@@ -4,6 +4,7 @@ import com.splot.carservice.model.Product;
 import com.splot.carservice.repository.ProductRepository;
 import com.splot.carservice.service.ProductService;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(Long id) {
-        return productRepository.getReferenceById(id);
+        return Optional.of(productRepository.getReferenceById(id))
+                .orElseThrow(() -> new RuntimeException("Product with id: " + id + " not found!"));
     }
 }

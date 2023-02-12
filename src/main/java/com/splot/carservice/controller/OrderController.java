@@ -49,10 +49,10 @@ public class OrderController {
 
     @PostMapping("/{id}/product")
     @ApiOperation("Add new product to existing order by order id")
-    public OrderResponseDto updateStatus(@PathVariable Long id,
+    public OrderResponseDto addProduct(@PathVariable Long id,
                                          @RequestBody ProductRequestDto requestDto) {
         Product product = productRequestMapper.mapToModel(requestDto);
-        return responseMapper.mapToDto(orderService.addMachineComponent(id, product));
+        return responseMapper.mapToDto(orderService.addProduct(id, product));
     }
 
     @PutMapping("/{id}")

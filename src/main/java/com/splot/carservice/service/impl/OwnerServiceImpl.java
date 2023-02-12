@@ -6,6 +6,7 @@ import com.splot.carservice.repository.OwnerRepository;
 import com.splot.carservice.service.OwnerService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -22,7 +23,8 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Owner getById(Long id) {
-        return ownerRepository.getReferenceById(id);
+        return Optional.of(ownerRepository.getReferenceById(id))
+                .orElseThrow(() -> new RuntimeException("Owner with id: " + id + " not found!"));
     }
 
     @Override
@@ -33,6 +35,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public List<Order> getOrders(Long id) {
-        return ownerRepository.getReferenceById(id).getOrders();
+        return Optional.of(ownerRepository.getReferenceById(id).getOrders())
+                .orElseThrow(() -> new RuntimeException("Owner with id: " + id + "not found!"));
     }
 }

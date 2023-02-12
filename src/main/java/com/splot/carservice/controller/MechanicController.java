@@ -50,7 +50,7 @@ public class MechanicController {
                                       @RequestBody MechanicRequestDto requestDto) {
         Mechanic mechanic = requestMapper.mapToModel(requestDto);
         mechanic.setId(id);
-        return responseMapper.mapToDto(mechanic);
+        return responseMapper.mapToDto(mechanicService.save(mechanic));
     }
 
     @GetMapping("/{id}/orders")
